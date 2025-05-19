@@ -26,6 +26,37 @@ function Write-CurrentFilePath {
     Write-Host "-Resolve:       '$(Split-Path -Resolve $currentFilePath)'"
 }
 
+function Write-Message {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]$Message,
+
+        [Parameter()]
+        [int]$Times
+    )
+
+    Write-Host $($Message * $(if ($Times) { $Times } else { 1 }))
+}
+
+# Write-Message -Message "Hello world`n" -Times 10
+
+function Write-Alias {
+    # Output: cls -> Clear-Host
+    Get-Alias cls
+    
+    # Output:
+    # ALIASES
+    #     clear
+    #     cls
+    Get-Help cls
+
+    Get-Help help
+
+    # Open online docs
+    Get-Help Get-ChildItem -Online
+}
+
 function Start-Main {
     # Write-AllConsoleColor
     Write-CurrentFilePath
