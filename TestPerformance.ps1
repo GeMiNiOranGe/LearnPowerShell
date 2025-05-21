@@ -1,0 +1,52 @@
+$repeat = 25000
+
+function Test-Array {
+    $time1 = Measure-Command {
+        $array = @()
+        (1..$repeat).ForEach({ $array += $_ })
+    }
+    
+    $time2 = Measure-Command {
+        $arrayList = [System.Collections.ArrayList]::new()
+        (1..$repeat).ForEach({ $arrayList += $_ })
+    }
+    
+    "Array:     $($time1.TotalMilliseconds) ms"
+    "ArrayList: $($time2.TotalMilliseconds) ms" # faster way
+}
+
+function Test-AddWay {
+    $time1 = Measure-Command {
+        $arrayList = [System.Collections.ArrayList]::new()
+        (1..$repeat).ForEach({ $arrayList += $_ })
+    }
+    
+    $time2 = Measure-Command {
+        $arrayList = [System.Collections.ArrayList]::new()
+        (1..$repeat).ForEach({ $arrayList.Add($_) })
+    }
+
+    $time3 = Measure-Command {
+        $arrayList = [System.Collections.ArrayList]::new()
+        $arrayList.AddRange(1..$repeat)
+    }
+    
+    "'+=' operator:     $($time1.TotalMilliseconds) ms"
+    "'Add' method:      $($time2.TotalMilliseconds) ms" # faster way
+    "'AddRange' method: $($time3.TotalMilliseconds) ms" # fastest way
+}
+
+function Test-DiscardReturnValue {
+    $time1 = Measure-Command {
+        $arrayList = [System.Collections.ArrayList]::new()
+        (1..$repeat).ForEach({ $arrayList.Add($i) | Out-Null })
+    }
+    
+    $time2 = Measure-Command {
+        $arrayList = [System.Collections.ArrayList]::new()
+        (1..$repeat).ForEach({ [void]$arrayList.Add($i) })
+    }
+    
+    "'Out-Null' cmdlet: $($time1.TotalMilliseconds) ms"
+    "'void' type:       $($time2.TotalMilliseconds) ms" # faster way
+}
