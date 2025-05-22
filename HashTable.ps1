@@ -1,12 +1,11 @@
 $person = @{
-    id             = 1;
-    name           = "Mike";
-    height         = 1.88;
-    "phone number" = "0462365476";
+    id             = 1
+    height         = 1.88
+    "phone number" = "0462365476"
     address        = @{
-        street   = "Torotachi";
+        street   = "Torotachi"
         district = 9
-    };
+    }
     habit          = @(
         "Sprint",
         "Walk",
@@ -20,8 +19,10 @@ $person
 Write-Host
 
 $person["age"] = 30
+$person."phone number" = "0000000000"
+$person.Add("name", "Mike")
 
-Write-Host "===> Add 'age':"
+Write-Host "===> After adding:"
 $person
 
 Write-Host

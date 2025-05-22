@@ -50,3 +50,19 @@ function Test-DiscardReturnValue {
     "'Out-Null' cmdlet: $($time1.TotalMilliseconds) ms"
     "'void' type:       $($time2.TotalMilliseconds) ms" # faster way
 }
+
+function Test-RegexReplace {
+    $name = "MyName"
+    $message = ("This is a sample with {{name}} placeholder.`n" * $repeat)
+
+    $time1 = Measure-Command {
+        [void]$message -replace "{{name}}", $name
+    }
+    
+    $time2 = Measure-Command {
+        [void]$message.Replace("{{name}}", $name)
+    }
+
+    "PowerShell -replace:   $($time1.TotalMilliseconds) ms" # faster way
+    "System.String.Replace: $($time2.TotalMilliseconds) ms"
+}
