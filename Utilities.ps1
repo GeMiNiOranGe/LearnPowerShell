@@ -55,6 +55,9 @@ function Write-Alias {
 
     # Open online docs
     Get-Help Get-ChildItem -Online
+
+    # Open in new windows docs
+    Get-Help Get-ChildItem -ShowWindow
 }
 
 function Find-ApprovedVerb {
